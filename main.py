@@ -2,6 +2,7 @@
 
 import argparse
 import logging
+import sys
 import binascii
 from collections import Counter
 
@@ -37,11 +38,11 @@ def is_hex(s):
     Returns:
         bool: True if the string is a valid hexadecimal string, False otherwise.
     """
-    try:
-        int(s, 16)
-        return True
-    except ValueError:
-        return False
+    # int(s, 16) alone is too permissive for this job: it accepts a
+    # leading sign, surrounding whitespace, and odd lengths that
+    # unhexlify then rejects on a different path. Require plain even
+    # length hex digits, which is the shape a nonce line must have.
+    return bool(s) and len(s) % 2 == 0 and all(c in "0123456789abcdefABCDEF" for c in s)
 
 
 def load_nonces_from_file(filename, min_length, max_length):
@@ -143,6 +144,9 @@ def main():
     parser = setup_argparse()
     args = parser.parse_args()
 
+    if args.min_length < 0 or args.max_length < args.min_length:
+        parser.error("--max-length must be at least --min-length, and both must be non-negative.")
+
     all_nonces = []
     for filename in args.nonces:
         try:
@@ -150,11 +154,14 @@ def main():
             all_nonces.extend(nonces)
         except (FileNotFoundError, ValueError) as e:
             logging.error(f"Error processing file {filename}: {e}")
-            return  # Exit if a file fails to process.  Avoids partial analysis.
+            # Exit 1, not a silent return: a failed or empty analysis is
+            # not a successful one, and a caller checking the exit code
+            # used to be told it was. Partial analysis is still avoided.
+            return 1
 
     if not all_nonces:
         logging.warning("No valid nonces found in the provided files. Exiting.")
-        return
+        return 1
 
     output_lines = [] # Collect output lines before writing to file/stdout
 
@@ -189,16 +196,18 @@ def main():
 
         except IOError as e:
             logging.error(f"Error writing to file {args.output_file}: {e}")
+            return 1
 
     else:
         for line in output_lines:
             print(line)
+    return 0
 
 
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
 
 
 # Example usage (create dummy files for testing):
