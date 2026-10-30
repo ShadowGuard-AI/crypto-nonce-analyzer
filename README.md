@@ -1,3 +1,5 @@
+![Banner](banner.png)
+
 # crypto-nonce-analyzer
 Analyzes cryptographic nonces across multiple messages to detect patterns, collisions, or predictability, which can indicate vulnerabilities in the nonce generation process. - Focused on Basic cryptographic operations
 
