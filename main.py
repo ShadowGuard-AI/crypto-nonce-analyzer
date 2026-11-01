@@ -68,6 +68,12 @@ def load_nonces_from_file(filename, min_length, max_length):
                 nonce_hex = line.strip()
                 if not nonce_hex:  # Skip empty lines
                     continue
+                # Two failure shapes get two treatments in this loop,
+                # on purpose: a line that is not hex at all raises and
+                # aborts the whole file (and main then aborts the run),
+                # while a well formed nonce of the wrong length only
+                # warns and skips below. A typo in a file is fatal, a
+                # short nonce is data.
                 if not is_hex(nonce_hex):
                     raise ValueError(f"Invalid hexadecimal nonce: {nonce_hex}")
 
@@ -122,6 +128,12 @@ def detect_incrementing_nonces(nonces):
         list: A list of tuples containing incrementing nonce pairs.
     """
     incrementing_pairs = []
+    # Only neighbours are compared, in the order the nonces arrived.
+    # main flattens every input file into one list first, so the last
+    # nonce of one file is also checked against the first of the next,
+    # and a pair split across the file boundary can be reported. The
+    # integer comparison ignores byte length, so a 4 byte nonce can
+    # count as one less than a 16 byte nonce that follows it.
     for i in range(len(nonces) - 1):
         try:
             nonce1_int = int.from_bytes(nonces[i], 'big')
@@ -130,6 +142,9 @@ def detect_incrementing_nonces(nonces):
             if nonce2_int == nonce1_int + 1:
                 incrementing_pairs.append((binascii.hexlify(nonces[i]).decode(), binascii.hexlify(nonces[i+1]).decode()))
         except OverflowError:
+            # Kept from the original shape of this check. In practice
+            # int.from_bytes handles any length Python can hold in
+            # memory, so I have not seen this branch fire.
             logging.warning("Nonce too large to analyze for incrementing pattern.")
         except Exception as e:
             logging.error(f"Error during incrementing nonce check: {e}")
