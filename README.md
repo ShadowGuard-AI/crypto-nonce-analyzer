@@ -33,4 +33,4 @@ The exit code is 0 for a completed analysis, 1 when a file cannot be read, a lin
 
 ## License
 
-Copyright (c) ShadowStrikeHQ
+Licensed under the terms in LICENSE.
