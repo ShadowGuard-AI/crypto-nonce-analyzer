@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" role="img" aria-label="The yard in three bands: the office windows steady while the blue hour deepens in the far band, a carried lamp swinging across the body for stop, circling for proceed, and held level for a mark in the middle band, and the yard cat asleep and breathing on the crates in the near band">
+<rect width="900" height="300" fill="#232c40"><animate attributeName="fill" values="#2c3850; #1a2233; #2c3850" dur="30s" repeatCount="indefinite"/></rect>
+<rect x="90" y="52" width="150" height="86" fill="#141a28"/>
+<rect x="112" y="74" width="30" height="36" fill="#fad25a"/><rect x="168" y="74" width="30" height="36" fill="#10141f"/>
+<g stroke="#969aa2" stroke-width="4"><line x1="60" y1="286" x2="360" y2="150"/><line x1="840" y1="286" x2="540" y2="150"/></g>
+<g fill="#34466e"><rect x="16" y="150" width="220" height="104"/><rect x="664" y="150" width="220" height="104"/></g>
+<g transform="translate(452 148)">
+<g>
+<animateTransform attributeName="transform" type="rotate" values="0 0 -34; -34 0 -34; 34 0 -34; 0 0 -34; 0 0 -34; 0 0 -34" keyTimes="0; 0.18; 0.36; 0.46; 0.8; 1" dur="12s" repeatCount="indefinite"/>
+<line x1="0" y1="-34" x2="0" y2="6" stroke="#101216" stroke-width="7"/>
+<rect x="-15" y="4" width="30" height="38" fill="#101216"/>
+<circle cx="0" cy="23" r="10" fill="#f08228"/>
+<path d="M-11 4 A12 12 0 0 1 11 4" fill="none" stroke="#101216" stroke-width="4"/>
+</g>
+<line x1="-4" y1="-30" x2="-30" y2="30" stroke="#14161c" stroke-width="11"/>
+</g>
+<g fill="#6e5232"><rect x="96" y="238" width="120" height="34"/><rect x="110" y="206" width="94" height="30"/></g>
+<g fill="#463f3a">
+<ellipse cx="168" cy="228" rx="34" ry="13"><animate attributeName="ry" values="13; 15.4; 13" dur="5s" repeatCount="indefinite"/></ellipse>
+<ellipse cx="196" cy="230" rx="15" ry="10"><animate attributeName="ry" values="10; 11.6; 10" dur="5s" repeatCount="indefinite"/></ellipse>
+<g><path d="M206 218 l14 -6 l-3 13 z" fill="#463f3a"><animateTransform attributeName="transform" type="rotate" values="0 208 222; 0 208 222; -22 208 222; 0 208 222" keyTimes="0; 0.55; 0.65; 1" dur="15s" repeatCount="indefinite"/></path></g>
+</g>
+</svg>
